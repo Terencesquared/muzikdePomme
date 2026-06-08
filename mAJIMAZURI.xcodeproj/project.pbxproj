@@ -45,6 +45,11 @@
 			path = mAJIMAZURIUITests;
 			sourceTree = "<group>";
 		};
+		B7C18AEF2FD6AE7D003B89C3 /* Preview Content */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +84,7 @@
 				B7C18ACA2FD6AABB003B89C3 /* mAJIMAZURITests */,
 				B7C18AD42FD6AABB003B89C3 /* mAJIMAZURIUITests */,
 				B7C18ABB2FD6AABA003B89C3 /* Products */,
+				B7C18AEF2FD6AE7D003B89C3 /* Preview Content */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +115,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				B7C18ABC2FD6AABA003B89C3 /* mAJIMAZURI */,
+				B7C18AEF2FD6AE7D003B89C3 /* Preview Content */,
 			);
 			name = mAJIMAZURI;
 			packageProductDependencies = (
