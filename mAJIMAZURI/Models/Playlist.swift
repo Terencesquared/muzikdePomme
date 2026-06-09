@@ -7,6 +7,7 @@
 
 import Foundation
 struct Playlist: PlaylistProtocol {
+ 
     var name: String
     var songs: [any SongProtocol] = []
     mutating func addSong(_ song: any SongProtocol) {

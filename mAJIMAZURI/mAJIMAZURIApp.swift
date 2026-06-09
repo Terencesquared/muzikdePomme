@@ -13,5 +13,7 @@ struct mAJIMAZURIApp: App {
         WindowGroup {
             ContentView()
         }
+    
+        
     }
 }

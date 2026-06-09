@@ -9,7 +9,7 @@ import Foundation
 
 protocol PlaylistProtocol {
     var name: String { get }
-    var songs: [any SongProtocol] { get }
+    var songs: [any SongProtocol] { get set}
     
     mutating func addSong(_ song: any SongProtocol)
     mutating func removeSong(named title: String)
