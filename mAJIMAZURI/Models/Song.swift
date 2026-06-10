@@ -6,11 +6,12 @@
 //
 
 import Foundation
-struct Song: SongProtocol {
+struct Song: SongProtocol, Codable, Identifiable {
+    let id: UUID
     let title: String
     let artist: String
     let album: String
-    let duration: Double
+    let duration: TimeInterval
     let genre: Genre
     let path: String
     let uRIimage: URL

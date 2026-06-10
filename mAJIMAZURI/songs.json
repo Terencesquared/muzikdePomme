@@ -1,0 +1,21 @@
+[
+    {
+        "title": "Essence",
+        "artist": "Wizzkid",
+        "album": "Made in Lagos",
+        "duration": 214,
+        "genre": "Hip Hop",
+        "path": "songs/essence.mp3",
+        "uRIimage":  "https://i.ytimg.com/vi/0o7dQcLd_cY/maxresdefault.jpg"
+    },
+    {
+        "title": "Softly",
+        "artist": "Cruel Santino",
+        "album": "Subaru Boys",
+        "duration": 189,
+        "genre": "Hip Hop",
+        "path": "songs/softly.mp3",
+        "uRIimage":  "https://i.ytimg.com/vi/0o7dQcLd_cY/maxresdefault.jpg"
+    }
+    
+]

@@ -1,87 +1,75 @@
 import SwiftUI
 
 struct PlaylistView: View {
-    @State var playlist = Playlist(name: "Banana")
-    
+    @State var searchQuery = ""
+    @State var isSearching = false
+    @State var playlist = SampleData.playlist
+
     var body: some View {
-       
-        List(playlist.songs, id: \.title) { song in
-            HStack (spacing: 12){
-                AsyncImage(url: song.uRIimage) { image in
-                    image.resizable()
-                        .scaledToFit()
-                } placeholder: {
-                    Color.gray
-                }
-                .frame(width: 55, height: 55)
-                .cornerRadius(8)
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(song.title)
-                        .font(.headline)
-                    Text(song.artist)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-                
-                Spacer()
-                
-                Button {
-                    
-                } label: {
-                    Image(systemName: "heart")
-                        .foregroundColor(.gray)
-                    
-                }
-                .buttonStyle(PlainButtonStyle())
-                
-            }
-            .padding(.vertical, 4)
-        }
-        .navigationTitle("All tracks")
-        .onAppear {
-                let song1 = Song(
-                    title: "Essence",
-                    artist: "Wizzkid",
-                    album:"Made in Lagos" ,
-                    duration: 214,
-                    genre: .classical,
-                    path: "songs/essence.mp3",
-                    uRIimage: URL(string: "https://i.ytimg.com/vi/0o7dQcLd_cY/maxresdefault.jpg")!
-                )
-                let song2 = Song(
-                    title: "Softly",
-                    artist: "Cruel Santino",
-                    album:"Subaru boys" ,
-                    duration: 214,
-                    genre: .classical,
-                    path:"songs/softly.mp3" ,
-                    uRIimage: URL(string: "https://i.ytimg.com/vi/0o7dQcLd_cY/maxresdefault.jpg")!
-                )
-                //create a playlist
-                //var myPlaylist = Playlist(name: "Banana")
-                playlist.addSong(song1)
-                playlist.addSong(song2)
-                //self.myPlaylist = myPlaylist
-                
-                //test the functions
-                print("Playlist: \(playlist.name)")
-                print("Total duration: \(playlist.totalDuration()) seconds")
-                print ("Songs by Wizkid: \(playlist.findSong(byArtist:"Wizzkid").count)")
-                
-                if let found = playlist.searchSong(named: "Softly") {
-                    print("Found: \(found.title) by \(found.getAuthor())")
-                    print("Duration: \(found.getPlayingTime())")
-                    
+        List {
+            ForEach(playlist.songs.compactMap { $0 as? Song }, id: \.id)  { song in
+                NavigationLink(destination: SongDetailView(song: song)) {
+                    HStack(spacing: 12) {
+                        AsyncImage(url: song.uRIimage) { image in
+                            image.resizable().scaledToFit()
+                        } placeholder: {
+                            Color.gray
+                        }
+                        .frame(width: 55, height: 55)
+                        .cornerRadius(8)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(song.title)
+                                .font(.headline)
+                            Text(song.artist)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+
+                        Spacer()
+
+                        Button {
+                            //code for the button functionality
+                            playlist.toggleFavorite(songId: song.id)} label: {
+                                Image(systemName: playlist.isFavorite(songId: song.id) ? "heart.fill" : "heart")
+                                    .foregroundColor(playlist.isFavorite(songId: song.id) ? .red: .gray)
+                                    
+                            }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.vertical, 4)
                 }
             }
+            .onDelete { playlist.removeSongs(at: $0) }
+            .onMove { playlist.moveSongs(from: $0, to: $1) }
+        }                                          // ← List closes here
+        .searchable(text: $searchQuery, prompt: "Search iTunes")
+        .onSubmit(of: .search) {
+            Task {
+                isSearching = true
+                let results = await iTunesHelper.searchSongs(query: searchQuery)
+                for song in results {
+                    playlist.addSong(song)
+                }
+                isSearching = false
+            }
         }
-            
-                
-                
-               
+        .overlay {
+            if isSearching {
+                ProgressView("Searching iTunes...")
+            }
+        }
+        .navigationTitle(playlist.name)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
+            }
+        }
     }
+}
 
 #Preview {
-    PlaylistView()
+    NavigationStack {
+        PlaylistView()
+    }
 }
