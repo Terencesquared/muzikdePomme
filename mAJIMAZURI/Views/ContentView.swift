@@ -8,20 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var store = PlaylistStore()
+    @StateObject var favoritesStore = FavoritesStore()
     
     var body: some View {
         TabView {
             NavigationStack {
-                PlaylistView()
+                PlaylistView(store: store, favoritesStore: favoritesStore)
             }
             .tabItem {
                 Label("All", systemImage: "music.note.list")
             }
             
             NavigationStack {
-                Text("Favorites coming soon")
+                FavoritesView(favoritesStore: favoritesStore)
             }
-             .tabItem {
+            .tabItem {
                 Label("Favorites", systemImage: "heart.fill")
             }
         }

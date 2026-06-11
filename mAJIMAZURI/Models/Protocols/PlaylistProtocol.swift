@@ -10,10 +10,6 @@ import Foundation
 protocol PlaylistProtocol {
     var name: String { get }
     var songs: [any SongProtocol] { get set}
-    var favoriteSongIds: Set<UUID> { get }
-    mutating func toggleFavorite(songId: UUID)
-    func isFavorite(songId: UUID) -> Bool
-    
     
     mutating func addSong(_ song: any SongProtocol)
     mutating func removeSong(named title: String)

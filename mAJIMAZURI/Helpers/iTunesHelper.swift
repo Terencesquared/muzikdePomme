@@ -40,7 +40,7 @@ struct iTunesResponseDTO: Codable {
 struct iTunesHelper {
     static func searchSongs(query: String) async -> [Song] {
         let formatted = query.replacingOccurrences(of: " ", with: "+")
-        let urlString = "https://itunes.apple.com/search?term=\(formatted)&media=music&limit=30"
+        let urlString = "https://itunes.apple.com/search?term=\(formatted)&media=music&limit=10"
         
         guard let url = URL(string: urlString) else { return [] }
         
